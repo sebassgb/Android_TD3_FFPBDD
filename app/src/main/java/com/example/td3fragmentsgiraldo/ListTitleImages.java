@@ -6,15 +6,38 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 public class ListTitleImages extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private String flickr_reponse = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a566e0ab9da7898e5fdf4c03b60c4532&per_page=10&format=json&nojsoncallback=1&tags=cat";
+     private ListView ListTitles;
+    ArrayList<String> listItems=new ArrayList<String>();
+
+
+    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    ArrayAdapter<String> adapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,8 +71,39 @@ public class ListTitleImages extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_title_images, container, false);
+
+        final View rootView = inflater.inflate(R.layout.fragment_list_title_images, container, false);
+        adapter= new ArrayAdapter<String>(getActivity(),
+                R.layout.fragment_text_view);
+
+        ListTitles = (ListView) rootView.findViewById(R.id.ListTitles);
+        final ArrayList<String> reponseJSON = null;
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, flickr_reponse,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        reponseJSON.add(response);
+                        Log.i("SGB", response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("SGB", "Error return request");
+            }
+        });
+        queue.add(stringRequest);
+
+        if(reponseJSON!=null){
+
+            for (int i=0;i<reponseJSON.size();i++){
+                adapter.add(reponseJSON.get(i));
+            }
+            ListTitles.setAdapter(adapter);
+
+    }
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

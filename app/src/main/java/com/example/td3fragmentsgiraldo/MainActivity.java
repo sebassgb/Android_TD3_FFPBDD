@@ -5,28 +5,26 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextViewFragment.OnFragmentInteractionListener, ListImages.OnFragmentInteractionListener, ListTitleImages.OnFragmentInteractionListener, FragmentComplex.OnFragmentInteractionListener {
 
     Button fragmentTextView, fragmentComplex, fragmentListTitle, fragmentListImages;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        TextViewFragment fragmento1 = new TextViewFragment();
-
-       // Bundle bundle = new Bundle();
-        //bundle.putString("json_reponse", String.valueOf("test");
-        //fragmento1.setArguments(bundle);
-
-       FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameContainer, fragmento1);
-        transaction.commit();
 
         fragmentTextView = (Button) findViewById(R.id.buttonFragment1);
         fragmentComplex = (Button) findViewById(R.id.buttonFragment2);

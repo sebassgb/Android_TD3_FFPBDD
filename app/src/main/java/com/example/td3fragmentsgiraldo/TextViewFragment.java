@@ -24,11 +24,12 @@ public class TextViewFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private String flickr_reponse = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a566e0ab9da7898e5fdf4c03b60c4532&per_page=10&format=json&nojsoncallback=1&tags=cat";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String flickr_reponse = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a566e0ab9da7898e5fdf4c03b60c4532&per_page=10&format=json&nojsoncallback=1&tags=cat";
 
     TextView reponseJSON;
 
@@ -62,8 +63,8 @@ public class TextViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_text_view, container, false);
        reponseJSON = (TextView) rootView.findViewById(R.id.textJSON);
-       RequestQueue queue = Volley.newRequestQueue(getActivity());
-       StringRequest stringRequest = new StringRequest(Request.Method.GET, flickr_reponse,
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, flickr_reponse,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -77,7 +78,6 @@ public class TextViewFragment extends Fragment {
             }
         });
         queue.add(stringRequest);
-
 
 
         return rootView;

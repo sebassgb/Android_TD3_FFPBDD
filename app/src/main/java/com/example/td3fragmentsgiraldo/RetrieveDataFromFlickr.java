@@ -29,13 +29,7 @@ public class RetrieveDataFromFlickr extends AsyncTask<String, Void, JSONObject> 
     @Override
     protected JSONObject doInBackground(String... strings) {
 
-
-            //Create a URL object holding our url
-
-          /*  URL myUrl = new URL("http://www.flickr.com/services/feeds/photos_public.gne?"
-                    + "tags=cats"
-                    + "&format=json");*/
-
+        
         URL url = null;
         HttpURLConnection urlConnection = null;
         String result = null;
