@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="31dp">
+
+        <Button
+            android:id="@+id/buttonFragment1"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="@string/fragment1" />
+
+        <Button
+            android:id="@+id/buttonFragment2"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="@string/fragment2" />
+
+        <Button
+            android:id="@+id/buttonFragment3"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="@string/fragment3" />
+
+        <Button
+            android:id="@+id/buttonFragment4"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="@string/fragment4" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="643dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:ignore="MissingConstraints">
+
+        <fragment
+            android:id="@+id/fragment1"
+            android:name="com.example.td3fragmentsgiraldo.TextViewFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_text_view" />
+
+        <fragment
+            android:id="@+id/fragment2"
+            android:name="com.example.td3fragmentsgiraldo.ListImages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_list_images" />
+
+        <fragment
+            android:id="@+id/fragment3"
+            android:name="com.example.td3fragmentsgiraldo.ListTitleImages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_list_title_images" />
+
+        <fragment
+            android:id="@+id/fragment4"
+            android:name="com.example.td3fragmentsgiraldo.FragmentComplex"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_fragment_complex" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
