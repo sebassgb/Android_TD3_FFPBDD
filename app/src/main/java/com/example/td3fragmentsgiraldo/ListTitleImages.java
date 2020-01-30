@@ -18,11 +18,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -32,8 +34,9 @@ public class ListTitleImages extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String flickr_reponse = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a566e0ab9da7898e5fdf4c03b60c4532&per_page=10&format=json&nojsoncallback=1&tags=cat";
-     private ListView ListTitles;
-    ArrayList<String> listItems=new ArrayList<String>();
+    private ListView ListTitles;
+    private ArrayList<String> reponseJSON = null;
+    private RequestQueue mQueue;
 
 
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
@@ -62,6 +65,8 @@ public class ListTitleImages extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -73,35 +78,10 @@ public class ListTitleImages extends Fragment {
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fragment_list_title_images, container, false);
-        adapter= new ArrayAdapter<String>(getActivity(),
-                R.layout.fragment_text_view);
-
+        adapter= new ArrayAdapter<String>(getActivity(), R.layout.fragment_text_view);
         ListTitles = (ListView) rootView.findViewById(R.id.ListTitles);
-        final ArrayList<String> reponseJSON = null;
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, flickr_reponse,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        reponseJSON.add(response);
-                        Log.i("SGB", response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("SGB", "Error return request");
-            }
-        });
-        queue.add(stringRequest);
+        jsonParserFlickr();
 
-        if(reponseJSON!=null){
-
-            for (int i=0;i<reponseJSON.size();i++){
-                adapter.add(reponseJSON.get(i));
-            }
-            ListTitles.setAdapter(adapter);
-
-    }
 
         return rootView;
     }
@@ -133,5 +113,46 @@ public class ListTitleImages extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    private void jsonParserFlickr(){
+        mQueue = Volley.newRequestQueue(getActivity());
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, flickr_reponse, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONObject jsonArray = response.getJSONObject("photos");
+                            Log.i("SGB", String.valueOf(jsonArray));
+                            JSONArray Arrayphotos = jsonArray.getJSONArray("photo");
+                            Log.i("SGB", String.valueOf(Arrayphotos));
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject image = Arrayphotos.getJSONObject(i);
+                                String Imagetitle = image.getString("title");
+                                reponseJSON.add(Imagetitle);
+                                Log.i("SGB", Imagetitle);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+
+        if(reponseJSON!=null){
+
+            for (int i=0;i<reponseJSON.size();i++){
+                adapter.add(reponseJSON.get(i));
+                Log.i("SGB", reponseJSON.get(i));
+            }
+            ListTitles.setAdapter(adapter);
+        }
     }
 }
