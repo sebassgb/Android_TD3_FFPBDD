@@ -35,7 +35,6 @@ public class ListTitleImages extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String flickr_reponse = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a566e0ab9da7898e5fdf4c03b60c4532&per_page=10&format=json&nojsoncallback=1&tags=cat";
     private ListView ListTitles;
-    private ArrayList<String> reponseJSON = null;
     private RequestQueue mQueue;
 
 
@@ -78,11 +77,10 @@ public class ListTitleImages extends Fragment {
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fragment_list_title_images, container, false);
-        adapter= new ArrayAdapter<String>(getActivity(), R.layout.fragment_text_view);
         ListTitles = (ListView) rootView.findViewById(R.id.ListTitles);
+        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
         jsonParserFlickr();
-
-
+        ListTitles.setAdapter(adapter);
         return rootView;
     }
 
@@ -127,12 +125,12 @@ public class ListTitleImages extends Fragment {
                             JSONObject jsonArray = response.getJSONObject("photos");
                             Log.i("SGB", String.valueOf(jsonArray));
                             JSONArray Arrayphotos = jsonArray.getJSONArray("photo");
-                            Log.i("SGB", String.valueOf(Arrayphotos));
-                            for (int i = 0; i < jsonArray.length(); i++) {
+                         //   Log.i("SGB", String.valueOf(Arrayphotos));
+                            for (int i = 0; i < Arrayphotos.length(); i++) {
                                 JSONObject image = Arrayphotos.getJSONObject(i);
                                 String Imagetitle = image.getString("title");
-                                reponseJSON.add(Imagetitle);
-                                Log.i("SGB", Imagetitle);
+                                adapter.add("Titre de l'image "+(i+1)+" : "+Imagetitle);
+                              //  Log.i("SGB", Imagetitle);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -146,13 +144,5 @@ public class ListTitleImages extends Fragment {
         });
         mQueue.add(request);
 
-        if(reponseJSON!=null){
-
-            for (int i=0;i<reponseJSON.size();i++){
-                adapter.add(reponseJSON.get(i));
-                Log.i("SGB", reponseJSON.get(i));
-            }
-            ListTitles.setAdapter(adapter);
-        }
     }
 }

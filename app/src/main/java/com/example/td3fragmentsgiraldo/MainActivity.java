@@ -35,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentComplex.setOnClickListener(this);
         fragmentListTitle.setOnClickListener(this);
         fragmentListImages.setOnClickListener(this);
+
+        TextViewFragment fragmento1 = new TextViewFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameContainer, fragmento1);
+        transaction.commit();
     }
 
 
@@ -80,4 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
 }

@@ -8,18 +8,16 @@
     android:background="@android:color/white">
 
 
-    <ImageView
-        android:id="@+id/imageViewFlick"
-        android:layout_width="424dp"
-        android:layout_height="79dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/ic_launcher_foreground" />
-
     <ListView
-        android:id="@+id/ListImagesFlickr"
+        android:id="@+id/ListImages"
         android:layout_width="match_parent"
-        android:layout_height="314dp"
-        android:layout_marginTop="80dp" />
+        android:layout_height="match_parent" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:contentDescription="@string/todo"
+        android:scaleType="centerInside" />
 
 </FrameLayout>

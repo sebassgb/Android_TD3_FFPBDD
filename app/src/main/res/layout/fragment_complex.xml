@@ -6,9 +6,12 @@
     tools:context=".FragmentComplex"
     android:background="@android:color/holo_orange_light">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImages"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         />
+        android:layout_height="match_parent" >
+
+</androidx.recyclerview.widget.RecyclerView>
+
 
 </FrameLayout>

@@ -10,11 +10,11 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-public class BmAdapter extends BaseAdapter {
+public class BitmapAdapter extends BaseAdapter {
 
     private Context context_ = null;
 
-    public BmAdapter(Context context) {
+    public BitmapAdapter(Context context) {
         context_ = context;
     }
 
@@ -53,7 +53,7 @@ public class BmAdapter extends BaseAdapter {
                     .inflate(R.layout.fragment_list_images, parent, false);
         }
 
-        ImageView iv = (ImageView)convertView.findViewById(R.id.imageViewFlick);
+        ImageView iv = (ImageView)convertView.findViewById(R.id.imageView);
         iv.setImageBitmap(image);
 
         return convertView;
