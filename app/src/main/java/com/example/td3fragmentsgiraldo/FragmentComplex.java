@@ -40,7 +40,7 @@ public class FragmentComplex extends Fragment {
     private RequestQueue mQueue;
     private RecyclerView recyclerViewImages;
     private RecyclerView.Adapter adapterComplex;
-    private List<ImageFlickr> listImagesFlickr;
+    private List<ImageFlickr> ImagesFlickr;
 
 
     // TODO: Rename and change types of parameters
@@ -77,12 +77,8 @@ public class FragmentComplex extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_complex, container, false);
         recyclerViewImages = (RecyclerView) rootView.findViewById(R.id.rvImages);
-        adapterComplex = new AdapterImages(listImagesFlickr, getContext());
-        recyclerViewImages.setHasFixedSize(true);
-        recyclerViewImages.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listImagesFlickr = new ArrayList<>();
+        configureRecyclerView();
         jsonParserFlickr();
-        recyclerViewImages.setAdapter(adapterComplex);
 
         return rootView;
     }
@@ -116,6 +112,18 @@ public class FragmentComplex extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+
+    private void configureRecyclerView(){
+        // Create adapter passing in the sample user data
+        adapterComplex = new AdapterImages(ImagesFlickr, getContext());
+        // Attach the adapter to the recyclerview to populate items
+        recyclerViewImages.setAdapter(adapterComplex);
+        // Set layout manager to position the items
+        recyclerViewImages.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ImagesFlickr = new ArrayList<>();
+
+    }
+
     private void jsonParserFlickr(){
         //http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
         mQueue = Volley.newRequestQueue(getActivity());
@@ -141,13 +149,12 @@ public class FragmentComplex extends Fragment {
                                         image.getString("server"),
                                         url,
                                         image.getString("farm"));
-                                Log.i("SGB", imageF.getUrl());
-                                listImagesFlickr.add(imageF);
+                                ImagesFlickr.add(imageF);
+                                adapterComplex = new AdapterImages(ImagesFlickr, getContext());
                             }
 
-                            adapterComplex = new AdapterImages(listImagesFlickr, getContext());
-                            Log.i("SGB", String.valueOf(listImagesFlickr.get(0).getAuthor()));
                             recyclerViewImages.setAdapter(adapterComplex);
+                          //  Log.i("SGB", "inside Adapter Images constructor"+ adapterComplex.getItemCount());
 
                         } catch (JSONException e) {
                             e.printStackTrace();

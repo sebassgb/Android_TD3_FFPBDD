@@ -46,8 +46,8 @@ public class ListImages extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String flickr_reponse = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a566e0ab9da7898e5fdf4c03b60c4532&per_page=10&format=json&nojsoncallback=1&tags=cat";
-    public ListView list;
-    public BitmapAdapter tableau;
+    private ListView list;
+    private BitmapAdapter tableau;
     private RequestQueue mQueue;
     ArrayList<String> urlImgsParsed = new ArrayList<String>();
 

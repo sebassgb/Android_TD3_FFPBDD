@@ -39,7 +39,7 @@ public class ListTitleImages extends Fragment {
 
 
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
